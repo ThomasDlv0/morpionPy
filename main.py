@@ -18,56 +18,59 @@ def switch_playeur():
     else:
         current_playeur = "X"
 
+
 def check_win(clicked_row, clicked_col):
+    global win
     # detecter la victoire horizontale
     count = 0
     for i in range(3):
-        current_button = buttons[i][clicked_row]
-
-        if  current_button["text"] == current_playeur:
+        current_button = buttons[clicked_row][i]
+        if current_button["text"] == current_playeur:
             count += 1
-        if count == 3:
-            print_winner()
+    if count == 3:
+        print_winner()
+        return
 
     # detecter la victoire verticale
     count = 0
     for i in range(3):
-        current_button = buttons[clicked_col][i]
-
+        current_button = buttons[i][clicked_col]
         if current_button["text"] == current_playeur:
             count += 1
-        if count == 3:
-            print_winner()
+    if count == 3:
+        print_winner()
+        return
 
-# detecter la victoire diagonale
+    # detecter la victoire diagonale
     count = 0
     for i in range(3):
         current_button = buttons[i][i]
-
         if current_button["text"] == current_playeur:
             count += 1
-        if count == 3:
-            print_winner()
+    if count == 3:
+        print_winner()
+        return
 
-# detecter la victoire diagonale inverse
+    # detecter la victoire diagonale inverse
     count = 0
     for i in range(3):
-        current_button = buttons[2-i][i]
-
+        current_button = buttons[i][2 - i]
         if current_button["text"] == current_playeur:
             count += 1
-        if count == 3:
-            print_winner()
+    if count == 3:
+        print_winner()
+        return
 
-        if win is False:
-            count = 0
-            for col in range(3):
-                for row in range(3):
-                    current_button = buttons[col][row]
-                    if current_button["text"] == "X" or current_button["text"] == "O":
-                        count += 1
-            if count == 9:
-                check_null()
+    # vérifier si toutes les cases sont remplies pour un match nul
+    if not win:
+        count = 0
+        for col in range(3):
+            for row in range(3):
+                current_button = buttons[row][col]
+                if current_button["text"] == "X" or current_button["text"] == "O":
+                    count += 1
+        if count == 9:
+            check_null()
 
 
 def place_symbol(row, column):
